@@ -5,7 +5,9 @@ from modulos.canciones import (
     limpiar_lista,
 )
 
-
+from modulos.api import(
+    buscar_API
+)
 
 
 from modulos.archivos import (
@@ -19,7 +21,7 @@ def menu(lista_canciones):
             print("=====================")
             print("MENU:")
             print("=====================")
-            print("(1) Agregar cancion\n(2) Eliminar cancion\n(3) Mostrar canciones\n(4) Limpiar lista\n(5) Salir")
+            print("(1) Agregar cancion manualmente\n(2) Eliminar cancion\n(3) Mostrar canciones\n(4) Limpiar lista\n(5) Buscar en Internet\n(6) Salir")
             print("")
             try:
                 opcion = int(input(" >>>Ingrese su opcion: "))
@@ -33,6 +35,21 @@ def menu(lista_canciones):
                 elif opcion == 4:
                     limpiar_lista(lista_canciones)
                 elif opcion == 5:
+                    print("buscando en internet")
+                    while True:
+                        lista_internet = buscar_API()
+                        lista_canciones.extend(lista_internet)
+                        continuar = str(input("¿Desea añadir otra cancion? (S/N): "))
+                        try:
+                            if continuar.upper() == "N":
+                                break
+                            elif continuar.upper() == "S":
+                                continue
+                            else:
+                                print("Algo salio mal")
+                        except ValueError:
+                            print("Ingresa un parametro correcto")
+                elif opcion == 6:
                     print("Guardando datos...")
                     guardar_canciones(lista_canciones)
                     print("¡Datos guardados con éxito!")
